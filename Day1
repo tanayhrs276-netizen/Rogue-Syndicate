@@ -1,0 +1,30 @@
+const student = {
+    name: "Tanay harsh",
+    age:20,
+    course :"b.Tech",
+    stream : "computer science",
+    batch:"2023-2027",
+    marks: { DSA: 91, OS: 86, DBMS: 88, Maths: 92 },
+    hobbies: ["football", "gaming", "music"],
+    location: "bhopal",
+    email: "tanayhrs276@gmail.com",
+
+};
+
+function printStudent(s) {
+  const lines = [];
+  lines.push(`Student Details`);
+  lines.push(`----------------`);
+  lines.push(`Name     : ${s.name}`);
+  lines.push(`Age      : ${s.age}`);
+  lines.push(`Course    : ${s.course}`)
+  lines.push(`Stream   : ${s.stream}`);
+  lines.push(`Batch    : ${s.batch}`)
+  lines.push(`marks   : ${Object.entries(s.marks).map(([k, v]) => `${k} ${v}`).join(", ")}`);
+  lines.push(`Hobbies  : ${s.hobbies.join(", ")}`);
+  lines.push(`location : ${s.batch}`)
+  lines.push(`Email    : ${s.email}`)
+  console.log(lines.join("\n"));
+}
+
+printStudent(student);
