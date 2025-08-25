@@ -1,0 +1,58 @@
+class Student {
+    constructor(name, marks) {
+        this.name = name;
+        this.marks = marks;
+    }
+
+    totalMarks() {
+        let total = 0;
+        for (let subject in this.marks) {
+            total += this.marks[subject];
+        }
+        return total;
+    }
+
+    averageMarks() {
+        let subjects = Object.keys(this.marks).length;
+        return this.totalMarks() / subjects;
+    }
+
+    grade() {
+        let avg = this.averageMarks();
+        if (avg >= 90) return "A+";
+        else if (avg >= 80) return "A";
+        else if (avg >= 70) return "B";
+        else if (avg >= 60) return "C";
+        else return "F";
+    }
+
+    printReport() {
+        console.log("Student Name: " + this.name);
+        console.log("Marks: ", this.marks);
+        console.log("Total Marks: " + this.totalMarks());
+        console.log("Average Marks: " + this.averageMarks().toFixed(2));
+        console.log("Grade: " + this.grade());
+        console.log("---------------------------");
+    }
+}
+
+let students = [
+    new Student("Tanay", {Maths: 95, English: 88, Science: 92}),
+    new Student("Harsh", {Maths: 78, English: 80, Science: 75}),
+    new Student("Gaurav", {Maths: 85, English: 90, Science: 88}),
+    new Student("Tiwari", {Maths: 60, English: 65, Science: 70}),
+    new Student("Shubham", {Maths: 55, English: 50, Science: 60})
+];
+
+for (let student of students) {
+    student.printReport();
+}
+
+let topper = students[0];
+for (let i = 1; i < students.length; i++) {
+    if (students[i].totalMarks() > topper.totalMarks()) {
+        topper = students[i];
+    }
+}
+
+console.log("Topper of the class: " + topper.name + " with total marks " + topper.totalMarks());
