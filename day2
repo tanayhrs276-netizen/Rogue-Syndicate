@@ -1,0 +1,18 @@
+let students = [
+    { name: "Tanay", marks: 99 },
+    { name: "Harsh", marks: 78 },
+    { name: "Gaurav", marks: 92 },
+    { name: "Tiwari", marks: 85 },
+    { name: "Tathagat", marks: 69 },
+    { name: "shubham", marks: 88 }
+];
+
+let topper = students[0];
+
+for (let i = 1; i < students.length; i++) {
+    if (students[i].marks > topper.marks) {
+        topper = students[i];
+    }
+}
+
+console.log("The highest marks are scored by " + topper.name + " with " + topper.marks + " marks.congratulation for the achievement");
