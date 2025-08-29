@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electronics Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-100 via-indigo-50 to-white min-h-screen flex justify-center items-center p-6">
+
+  
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl">
+
+   
+    <div class="bg-white rounded-3xl shadow-lg p-6 flex flex-col">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">10 New Electronics</h2>
+      <input type="text" placeholder="Search products" class="w-full px-4 py-2 rounded-xl border border-gray-200 mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-400">
+      
+      <div class="space-y-4">
+        
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <img src="https://images.pexels.com/photos/2115256/pexels-photo-2115256.jpeg" class="w-14 h-14 rounded-xl object-cover" alt="Gaming Mouse" />
+            <div>
+              <p class="text-sm font-semibold text-gray-800">Gaming Mouse</p>
+              <span class="text-xs text-gray-500">₹1,499</span>
+            </div>
+          </div>
+          <button class="text-pink-500 font-bold">♡</button>
+        </div>
+        
+        
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <img src="https://images.pexels.com/photos/205421/pexels-photo-205421.jpeg" class="w-14 h-14 rounded-xl object-cover" alt="Laptop Pro X" />
+            <div>
+              <p class="text-sm font-semibold text-gray-800">Laptop Pro X</p>
+              <span class="text-xs text-gray-500 line-through">₹1,20,000</span>
+              <span class="ml-2 text-xs font-bold text-green-600">₹99,999</span>
+            </div>
+          </div>
+          <button class="text-pink-500 font-bold">♡</button>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="bg-gradient-to-br from-indigo-400 via-indigo-500 to-blue-600 rounded-3xl shadow-xl flex flex-col justify-center items-center text-center p-6">
+      <img src="https://images-cdn.ubuy.co.in/684d5e915f73bafe61013a38-snpurdiri-60-wired-gaming-keyboard-rgb.jpg" class="w-40 h-40 object-cover rounded-2xl border-4 border-white shadow-lg mb-4" alt="Gaming Keyboard" />
+      <h1 class="text-3xl font-extrabold text-white">Upgrade Your Setup</h1>
+      <button class="mt-6 px-6 py-3 bg-white text-indigo-600 font-bold rounded-full shadow hover:bg-gray-100 transition">
+        Shop Now
+      </button>
+    </div>
+
+    
+    <div class="bg-white rounded-3xl shadow-lg p-6">
+      <h2 class="text-lg font-bold text-gray-800 mb-3">Choose Your Variant</h2>
+      <img src="https://cdn.thewirecutter.com/wp-content/media/2024/12/BEST-GAMING-KEYBOARDS-2048px-5810-2x1-1.jpg?width=2048&quality=75&crop=2:1&auto=webp" class="w-full h-40 object-contain mb-4" alt="Wireless Headphones" />
+      
+     
+      <div class="flex space-x-3 justify-center mb-4">
+        <img src="https://images.pexels.com/photos/5082565/pexels-photo-5082565.jpeg" class="w-12 h-12 rounded-xl border border-gray-200 object-cover cursor-pointer hover:border-indigo-500" alt="Wireless Headphones Variant 1">
+        <img src="https://images.pexels.com/photos/2115256/pexels-photo-2115256.jpeg" class="w-12 h-12 rounded-xl border border-gray-200 object-cover cursor-pointer hover:border-indigo-500" alt="Wireless Headphones Variant 2">
+        <img src="https://images-cdn.ubuy.co.in/684d5e915f73bafe61013a38-snpurdiri-60-wired-gaming-keyboard-rgb.jpg" class="w-12 h-12 rounded-xl border border-gray-200 object-cover cursor-pointer hover:border-indigo-500" alt="Wireless Headphones Variant 3">
+      </div>
+
+     
+      <h3 class="text-xl font-semibold text-gray-800">Gaming keyboard</h3>
+      <p class="text-gray-500 text-sm">Battery: 40hr | Bluetooth: 5.3 | Click Sound: Yes</p>
+      <div class="flex justify-between items-center mt-4">
+        <span class="text-2xl font-bold text-indigo-600">₹5,999</span>
+        <button class="bg-indigo-600 text-white px-5 py-2 rounded-xl hover:bg-indigo-700 transition">
+          Add to Cart
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
