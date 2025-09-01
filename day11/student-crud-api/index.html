@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student CRUD API Demo</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; }
+        input, button { margin: 5px; }
+    </style>
+</head>
+<body>
+    <h2>Student List</h2>
+    <button onclick="fetchStudents()">Refresh List</button>
+    <ul id="studentList"></ul>
+
+    <h3>Add Student</h3>
+    Name: <input id="addName" />
+    <br>Age: <input id="addAge" type="number" />
+    <button onclick="addStudent()">Add</button>
+
+    <h3>Update Student</h3>
+    ID: <input id="updateId" type="number" />
+    Name: <input id="updateName" />
+    Age: <input id="updateAge" type="number" />
+    <button onclick="updateStudent()">Update</button>
+
+    <h3>Delete Student</h3>
+    ID: <input id="deleteId" type="number" />
+    <button onclick="deleteStudent()">Delete</button>
+
+    <script src="app.js">
+        function fetchStudents() {
+            fetch('http://localhost:3000/students')
+                .then(res => res.json())
+                .then(data => {
+                    const list = document.getElementById('studentList');
+                    list.innerHTML = '';
+                    data.forEach(student => {
+                        list.innerHTML += `<li>ID: ${student.id} - ${student.name}, Age: ${student.age}</li>`;
+                    });
+                });
+        }
+
+        function addStudent() {
+            const name = document.getElementById('addName').value;
+            const age = document.getElementById('addAge').value;
+            fetch('http://localhost:3000/students', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, age })
+            }).then(fetchStudents);
+        }
+
+        function updateStudent() {
+            const id = document.getElementById('updateId').value;
+            const name = document.getElementById('updateName').value;
+            const age = document.getElementById('updateAge').value;
+            fetch(`http://localhost:3000/students/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, age })
+            }).then(fetchStudents);
+        }
+
+        function deleteStudent() {
+            const id = document.getElementById('deleteId').value;
+            fetch(`http://localhost:3000/students/${id}`, {
+                method: 'DELETE'
+            }).then(fetchStudents);
+        }
+
+      
+        fetchStudents();
+    </script>
+</body>
+</html>
