@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Socket.IO Chat</title>
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+<h2>Rooms</h2>
+<div class="rooms">
+<button data-room="general" class="room active">#general</button>
+<button data-room="tech" class="room">#tech</button>
+<button data-room="random" class="room">#random</button>
+</div>
+<h2>Online</h2>
+<ul id="userList" class="users"></ul>
+</aside>
+
+
+<main class="chat">
+<header class="chat-header">
+<h1 id="roomTitle">#general</h1>
+<div class="you">
+<label>Your name</label>
+<input id="nameInput" maxlength="20" placeholder="Your nickname" />
+<button id="joinBtn">Join</button>
+</div>
+</header>
+<script src="/socket.io/socket.io.js"></script>
+<script src="script.js"></script>
+
+
+
+<ul id="messages" class="messages"></ul>
+<div id="typing" class="typing" hidden></div>
+
+
+<form id="form" autocomplete="off" class="composer">
+<input id="input" placeholder="Type a message..." maxlength="2000" />
+<button type="submit">Send</button>
+</form>
+</main>
+</div>
+
+
+<!-- Socket.IO client served by the same server at /socket.io/socket.io.js -->
+<script src="/socket.io/socket.io.js"></script>
+<script>
+const socket = io();
+
+
+// Elements
+const messages = document.getElementById("messages");
+const form = document.getElementById("form");
+const input = document.getElementById("input");
+const typing = document.getElementById("typing");
+const userList = document.getElementById("userList");
+const nameInput = document.getElementById("nameInput");
+const joinBtn = document.getElementById("joinBtn");
+const roomTitle = document.getElementById("roomTitle");
+const roomButtons = document.querySelectorAll(".room");
+
+
+let currentRoom = "general";
+let joined = false;
+let typingTimeout;
+
+
+// Helpers
+function addMessage(html, isSystem = false) {
+const li = document.createElement("li");
+if (isSystem) li.classList.add("system");
+li.innerHTML = html;
+messages.appendChild(li);
+messages.scrollTop = messages.scrollHeight;
+}
+
+
+function setTyping(text) {
+typing.textContent = text;
+typing.hidden = !text;
+}
+// UI events
+joinBtn.addEventListener("click", () => {
+joined = false; // allow re-join with new name
+joinIfNeeded();
+});
+
+
+roomButtons.forEach((btn) => {
+btn.addEventListener("click", () => {
+const room = btn.dataset.room;
+if (room === currentRoom) return;
+roomButtons.forEach((b) => b.classList.remove("active"));
+btn.classList.add("active");
+currentRoom = room;
+roomTitle.textContent = `#${room}`;
+messages.innerHTML = ""; // clear messages on switch (client view only)
+socket.emit("switch:room", room);
+});
+});
+
+
+form.addEventListener("submit", (e) => {
+e.preventDefault();
+joinIfNeeded();
+if (!input.value) return;
+socket.emit("chat:message", input.value);
+input.value = "";
+socket.emit("chat:typing", false);
+});
+
+
+input.addEventListener("input", () => {
+joinIfNeeded();
+socket.emit("chat:typing", true);
+clearTimeout(typingTimeout);
+typingTimeout = setTimeout(() => socket.emit("chat:typing", false), 600);
+});
+
+
+// Socket events
+socket.on("system", ({ text }) => addMessage(`<em>${text}</em>`, true));
+
+
+socket.on("chat:message", ({ from, text, ts }) => {
+const time = new Date(ts).toLocaleTimeString();
+addMessage(`<strong>${from}</strong> <span class="time">${time}</span><br>${escapeHtml(text)}`);
+});
+
+
+socket.on("chat:typing", ({ from, isTyping }) => {
+setTyping(isTyping ? `${from} is typing…` : "");
+});
+
+
+socket.on("room:users", ({ users }) => {
+userList.innerHTML = users.map((u) => `<li>${escapeHtml(u)}</li>`).join("");
+});
+
+
+// Simple HTML escape to avoid XSS in this demo
+function escapeHtml(str) {
+return String(str)
+.replace(/&/g, "&amp;")
+.replace(/</g, "&lt;")
+.replace(/>/g, "&gt;")
+.replace(/"/g, "&quot;")
+.replace(/'/g, "&#039;");
+}
+</script>
+</body
+</html>
