@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Notes App</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; }
+  input, textarea { width: 100%; padding: 8px; margin: 8px 0; }
+  button { padding: 8px 16px; }
+  .note { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
+</style>
+</head>
+<body>
+  <h1>Notes App</h1>
+  <form id="noteForm">
+    <input type="text" id="title" placeholder="Title" required />
+    <textarea id="content" placeholder="Content" required></textarea>
+    <button type="submit">Add Note</button>
+  </form>
+  <div id="notes"></div>
+
+<script>
+  const apiUrl = 'http://localhost:3000/notes';
+
+  async function fetchNotes() {
+    const res = await fetch(apiUrl);
+    const notes = await res.json();
+    const notesDiv = document.getElementById('notes');
+    notesDiv.innerHTML = '';
+    notes.forEach(note => {
+      const noteDiv = document.createElement('div');
+      noteDiv.className = 'note';
+      noteDiv.innerHTML = `<h3>${note.title}</h3><p>${note.content}</p>`;
+      notesDiv.appendChild(noteDiv);
+    });
+  }
+
+  document.getElementById('noteForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const title = document.getElementById('title').value;
+    const content = document.getElementById('content').value;
+    await fetch(apiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title, content }),
+    });
+    document.getElementById('noteForm').reset();
+    fetchNotes();
+  });
+
+  fetchNotes();
+</script>
+</body>
+</html>
