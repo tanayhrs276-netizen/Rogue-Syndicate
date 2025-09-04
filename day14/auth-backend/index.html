@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Auth Demo</title>
+</head>
+<body>
+  <h2>Register</h2>
+  <form id="registerForm">
+    <input type="email" id="regEmail" placeholder="Email" required>
+    <input type="password" id="regPass" placeholder="Password" required>
+    <button type="submit">Register</button>
+    <div id="regResult"></div>
+  </form>
+
+  <h2>Login</h2>
+  <form id="loginForm">
+    <input type="email" id="loginEmail" placeholder="Email" required>
+    <input type="password" id="loginPass" placeholder="Password" required>
+    <button type="submit">Login</button>
+    <div id="loginResult"></div>
+  </form>
+
+  <script src="index.js">
+    document.getElementById('registerForm').onsubmit = async function(e) {
+      e.preventDefault();
+      let res = await fetch('http://localhost:3000/register', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          email: document.getElementById('regEmail').value,
+          password: document.getElementById('regPass').value
+        })
+      });
+      let data = await res.json();
+      document.getElementById('regResult').textContent = data.message || 'Registration error';
+    };
+
+    document.getElementById('loginForm').onsubmit = async function(e) {
+      e.preventDefault();
+      let res = await fetch('http://localhost:3000/login', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          email: document.getElementById('loginEmail').value,
+          password: document.getElementById('loginPass').value
+        })
+      });
+      let data = await res.json();
+      document.getElementById('loginResult').textContent = data.token ? 'Login successful!' : (data.message || 'Login error');
+      if (data.token)
+        localStorage.setItem('token', data.token); 
+    };
+  </script>
+</body>
+</html>
