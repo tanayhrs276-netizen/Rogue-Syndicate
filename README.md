@@ -1,1 +1,4 @@
-youtube link for presentation = https://youtu.be/rmYRnnJdsH8?si=1Pqj9WzQ4wqXEvth
+
+
+[Youtube presentation link](https://github.com/tanayhrs276-netizen/Rogue-Syndicate.git)
+
